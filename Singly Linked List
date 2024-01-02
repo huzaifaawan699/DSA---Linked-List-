@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+// Reverse  Singly Linked List
+struct Node{
+  int data;
+  Node*next;
+  Node(int d):data(d),next(NULL){}
+
+};
+Node *reverseSinglylinkedlist(Node*start){
+    Node*current=start;
+    Node*prev=NULL;
+    Node*next=NULL;
+    while(current!=NULL){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=prev;
+
+    }
+    return prev;
+}
+void print(Node*start){
+Node* current=start;
+while(current!=NULL){
+    cout<<current->data<<" ->";
+    current=current->next;
+}
+  cout<<endl;
+
+}
+int main(){
+Node*start=new Node(1);
+start->next=new Node(2);
+start->next->next=new Node(3);
+start->next->next->next=new Node(4);
+start->next->next->next->next=new Node(5);
+start->next->next->next->next->next=new Node(6);
+start->next->next->next->next->next->next=new Node(7);
+cout<<"Original Linked List:"<<endl;
+print(start);
+
+cout<<"After Reverse Singly Linked List:"<<endl;
+start=reverseSinglylinkedlist(start);
+print(start);
+
+while(start!=NULL){
+        Node*temp=start;
+        start=start->next;
+        delete temp;
+}
+return 0; 
+}
