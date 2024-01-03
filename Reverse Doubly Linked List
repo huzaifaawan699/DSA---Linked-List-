@@ -1,0 +1,62 @@
+//Reverse Doubly Linked List
+#include <iostream>
+using namespace std;
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+    Node(int d) : data(d), prev(NULL), next(NULL) {}
+};
+
+Node* reversedoublylinkedlist(Node* start) {
+    Node* current = start;
+    Node* temp = NULL;
+    while (current != NULL) {
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        // Move to the Next Node
+        current = current->prev;
+    }
+    if (temp != NULL) {
+        start = temp->prev;
+    }
+    return start;
+}
+
+void print(Node* start) {
+    Node* current = start;
+    while (current != NULL) {
+        cout << current->data << "-";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* start = new Node(1);
+    start->next = new Node(2);
+    start->next->prev = start;
+    start->next->next = new Node(3);
+    start->next->next->prev = start->next;
+    start->next->next->next = new Node(4);
+    start->next->next->next->prev = start->next->next;
+
+    cout << "Original Doubly Linked List: ";
+    print(start);
+
+    start = reversedoublylinkedlist(start);
+
+    cout << "Reversed Doubly Linked List: ";
+    print(start);
+
+    while (start != NULL) {
+        Node* temp = start;
+        start = start->prev;
+        delete temp;
+    }
+
+    return 0;
+}
+
+
